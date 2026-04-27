@@ -6,24 +6,31 @@ export default function LoginForm() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
+  // Función para el formulario normal (Default: Alumno)
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
-    // Simulamos una pequeña carga para que se vea pro antes de entrar
     setTimeout(() => {
-      router.push('/dashboard');
+      router.push('/perfil/alumno');
     }, 1000);
   };
 
+  // Función para los botones de acceso rápido
+  const handleQuickAccess = (path: string) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      router.push(path);
+    }, 800);
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-[#040d1a] font-redonda text-white relative overflow-hidden">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-[#040d1a] font-redonda text-white relative overflow-hidden p-4">
 
       {/* Decoración de fondo futurista */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#008cc7]/10 blur-[100px] rounded-full"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-[#46178f]/10 blur-[100px] rounded-full"></div>
 
-      {/* Contenedor Principal (Más grande y con Glassmorphism) */}
+      {/* Contenedor Principal */}
       <div className="relative z-10 w-full max-w-[450px] p-10 bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-[2.5rem] shadow-2xl">
 
         {/* Logo */}
@@ -39,13 +46,36 @@ export default function LoginForm() {
           </h1>
         </header>
 
-        <div className="mb-8">
-          <h2 className="text-2xl font-ubuntu font-bold mb-1">Bienvenido de nuevo</h2>
-          <p className="text-[#75777e] text-sm">Accede al ecosistema de aprendizaje de élite.</p>
+        <div className="mb-8 text-center">
+          <h2 className="text-2xl font-ubuntu font-bold mb-1">Bienvenido</h2>
+          <p className="text-[#75777e] text-sm">Selecciona un rol para probar el prototipo.</p>
+        </div>
+
+        {/* --- SECCIÓN DE ACCESO RÁPIDO (PROTOTIPO) --- */}
+        <div className="grid grid-cols-2 gap-3 mb-8">
+          {[
+            { label: 'Superadmin', path: '/admin/dashboard-admin', color: 'border-red-500/30' },
+            { label: 'Coordinador', path: '/coordinator/dashboard', color: 'border-purple-500/30' },
+            { label: 'Maestro', path: '/teacher/dashboard', color: 'border-green-500/30' },
+            { label: 'Alumno', path: '/dashboard', color: 'border-[#008cc7]/30' },
+          ].map((role) => (
+            <button
+              key={role.label}
+              onClick={() => handleQuickAccess(role.path)}
+              disabled={isLoading}
+              className={`py-3 px-2 bg-white/5 border ${role.color} rounded-xl text-[10px] font-bold uppercase tracking-wider hover:bg-white/10 transition-all active:scale-95 disabled:opacity-50`}
+            >
+              {role.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="relative flex items-center justify-center mb-8">
+            <span className="absolute inset-x-0 h-px bg-white/10"></span>
+            <span className="relative px-4 bg-[#0d1523] text-[9px] text-[#75777e] uppercase tracking-widest font-bold">O ingresar datos</span>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Campo: Usuario */}
           <div className="space-y-2">
             <label className="text-[10px] font-bold uppercase tracking-widest ml-1 text-[#75777e]">Usuario o Correo</label>
             <input
@@ -56,11 +86,10 @@ export default function LoginForm() {
             />
           </div>
 
-          {/* Campo: Contraseña */}
           <div className="space-y-2">
             <div className="flex justify-between items-end px-1">
               <label className="text-[10px] font-bold uppercase tracking-widest text-[#75777e]">Contraseña</label>
-              <a href="/forgot-password" className="text-sm">¿Olvidaste tu contraseña?</a>
+              <a href="#" className="text-[10px] text-[#008cc7] uppercase font-bold hover:underline">¿Olvidaste tu contraseña?</a>
             </div>
             <input
               required
@@ -70,7 +99,6 @@ export default function LoginForm() {
             />
           </div>
 
-          {/* Botón Principal */}
           <button
             type="submit"
             disabled={isLoading}
@@ -86,11 +114,11 @@ export default function LoginForm() {
         </form>
 
         <p className="text-center text-[11px] text-[#75777e] mt-10">
-          ¿Nuevo en la plataforma? <a href="/register" className="text-[#008cc7] font-bold underline ml-1">Crear Cuenta</a>
+          ¿Nuevo en la plataforma? <a href="#" className="text-[#008cc7] font-bold underline ml-1">Crear Cuenta</a>
         </p>
       </div>
 
-      <footer className="mt-12 text-[9px] font-bold text-white/20 uppercase tracking-[0.4em] relative z-10">
+      <footer className="mt-12 text-[9px] font-bold text-white/20 uppercase tracking-[0.4em] relative z-10 text-center">
         Imperia Intelligence Systems © 2026
       </footer>
     </div>

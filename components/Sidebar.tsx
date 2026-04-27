@@ -28,7 +28,7 @@ export default function Sidebar() {
       {/* MENÚ DE NAVEGACIÓN (Tus links actuales...) */}
       <nav className="flex-1 space-y-2">
         <SidebarLink href="/dashboard" icon="dashboard" label="Dashboard" active={pathname === '/dashboard'} />
-        <SidebarLink href="/courses" icon="menu_book" label="Mis Cursos" active={pathname === '/courses'} />
+        <SidebarLink href="/my-courses" icon="menu_book" label="Mis Cursos" active={pathname === '/courses'} />
         <SidebarLink href="/progress" icon="bar_chart" label="Progreso" active={pathname === '/progress'} />
         <SidebarLink href="/certifications" icon="workspace_premium" label="Certificaciones" active={pathname === '/certifications'} />
         <SidebarLink href="/settings" icon="settings" label="Configuración" active={pathname === '/settings'} />
